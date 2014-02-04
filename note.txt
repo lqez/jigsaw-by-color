@@ -1,0 +1,24 @@
+# prepare original
+convert sample-01.png -bordercolor none -border 10 original.png
+
+# border
+convert original.png -alpha extract -edge 4 border.png
+
+# prepare shade
+convert original.png -alpha extract -blur 0x1 -shade 120x30 shade_30.png
+
+# make bevel
+convert shade_30.png border.png -compose CopyOpacity -composite shade_bevel.png
+
+# composition
+convert original.png shade_bevel.png -compose hardlight -composite output.png
+
+
+# outline
+convert output.png \( +clone \
+             -channel A -blur 0x1 -level 0,80% +channel \
+             +level-colors black \
+           \) -compose DstOver -composite    outlined.png
+
+# final
+convert outlined.png -gravity Center -crop -10-10 +repage final.png
