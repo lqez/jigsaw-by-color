@@ -21,4 +21,4 @@ convert output.png \( +clone \
            \) -compose DstOver -composite    outlined.png
 
 # final
-convert outlined.png -gravity Center -crop -10-10 +repage final.png
+convert outlined.png -chop 9x9 -crop -9-9 final.png
